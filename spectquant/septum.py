@@ -10,13 +10,9 @@ import os
 import gc
 import numpy as np
 import nibabel as nib
-try:
-    import utils
-    import morphology
-except (ImportError, ModuleNotFoundError):
-    from markers import utils
-    from markers import morphology
 
+from spectquant import utils
+from spectquant import morphology
 
 class SeptumVol:
 

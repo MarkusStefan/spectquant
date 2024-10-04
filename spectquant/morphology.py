@@ -26,11 +26,7 @@ except (ImportError, ModuleNotFoundError):
     cp_fftconvolve = fftconvolve
     cp_binary_dilation = binary_dilation
 
-try:
-    import utils
-except (ImportError, ModuleNotFoundError):
-    from markers import utils
-# from . import utils
+from spectquant import utils
 
 def compute_suv(spect: nib.nifti1.Nifti1Image,
                 seg: Optional[Union[np.ndarray,

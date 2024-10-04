@@ -7,21 +7,11 @@ from typing import Optional, List, Dict, Union
 
 import numpy as np
 import nibabel as nib
+    
+from spectquant import utils
+from spectquant import morphology
+from spectquant.create_segs import create_segs
 
-# from markers import utils
-# from markers import morphology
-# from markers.create_segs import create_segs
-# from . import utils
-# from . import morphology
-# from .create_segs import create_segs
-try:    
-    import utils
-    import morphology
-    from create_segs import create_segs
-except (ImportError, ModuleNotFoundError):
-    from markers import utils
-    from markers import morphology
-    from markers.create_segs import create_segs
 
 class SUV:
     

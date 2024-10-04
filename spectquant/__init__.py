@@ -6,13 +6,13 @@ SpectQuant: \
     for Cardiac Amyloidosis Quantification on SPECT.
 """
 
-__version__ = "0.1.0"
+__version__ = "0.0.5"
 __author__ = "Markus Köfler"
 __all__ = [
     "SUV",
     "TBR",
-    "SegmentVolume",
-    "Uptake",
+    "SegmentVol",
+    "UptakeVol",
     "SeptumVol",
     "create_segs"
 ]
@@ -20,6 +20,6 @@ __all__ = [
 from .create_segs import create_segs
 from .suv import SUV
 from .tbr import TBR
-from .volume import SegmentVolume
-from .uptake import Uptake
+from .volume import SegmentVol
+from .uptake import UptakeVol
 from .septum import SeptumVol

@@ -12,15 +12,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import nibabel as nib
-try:
-    import utils
-    import morphology
-except (ImportError, ModuleNotFoundError):
-    from markers import utils
-    from markers import morphology
 
+from spectquant import utils
+from spectquant import morphology
 
-class SegmentVolume:
+class SegmentVol:
     """
     Class for automatic computation of the volume of one or multiple segmentation masks.
 

@@ -7,18 +7,10 @@ except (ImportError, ModuleNotFoundError):
     from collections.abc import Optional, List, Dict, Union
 
 import nibabel as nib
-# from markers import utils
-# from markers import morphology
-# from markers.create_segs import create_segs
-# from . import utils
-# from . import morphology
-# from .create_segs import create_segs
-try:
-    import morphology
-    from suv import SUV
-except (ImportError, ModuleNotFoundError):
-    import markers.morphology as morphology
-    from markers.suv import SUV
+
+from spectquant import morphology
+from spectquant.suv import SUV
+
 
 class TBR(SUV):
 
