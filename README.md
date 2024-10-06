@@ -88,5 +88,5 @@ $$
 
 - $\{LV\}$ = set of voxels of left ventricle
 
-![IVS Volume Quantification Process](imgs/septumvol.gif)
+![IVS Volume Quantification Process]([imgs/septumvol.gif](https://github.com/MarkusStefan/spectquant/blob/dev/imgs/septumvol.gif))
 *Figure 4: IVS Volume Quantification Process on CT with SPECT overlay showing the tracer uptake.*
