@@ -89,7 +89,7 @@ $$
 - $\{LV\}$ = set of voxels of left ventricle
 
 
-<div style="overflow: hidden; width: 300px; height: 200px;">
-  <img src="imgs/septumvol.gif" alt="IVS Volume Quantification Process" style="width: 400px; height: auto; margin: -50px 0 0 -50px;" />
+<div style="overflow: hidden; width: 600px; height: 600px;">
+  <img src="imgs/septumvol.gif" alt="IVS Volume Quantification Process" style="width: 600px; height: auto; margin: -250px 0 0 -250px;" />
 </div>
 *Figure 4: IVS Volume Quantification Process on CT with SPECT overlay showing the tracer uptake.*
