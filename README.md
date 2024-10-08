@@ -91,5 +91,6 @@ $$
 
 <img src="imgs/septumvol.gif" alt="IVS Volume Quantification Process" />
 
-![IVS ](imgs/septumvol.gif)
+[IVS ](imgs/septumvol.gif)
+![IVS_](https://raw.githubusercontent.com/MarkusStefan/spectquant/dev/imgs/septumvol.gif)
 *Figure 4: IVS Volume Quantification Process on CT with SPECT overlay showing the tracer uptake.*
