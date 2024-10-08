@@ -90,6 +90,6 @@ $$
 
 
 <div style="overflow: hidden; width: 600px; height: 600px;">
-  <img src="imgs/septumvol.gif" alt="IVS Volume Quantification Process" style="width: 600px; height: auto; margin: -250px 0 0 -250px;" />
+  <img src="imgs/septumvol.gif" alt="IVS Volume Quantification Process" style="width: 600px; height: auto; margin: -270px -130px -120px -180px;" />
 </div>
 *Figure 4: IVS Volume Quantification Process on CT with SPECT overlay showing the tracer uptake.*
