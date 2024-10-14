@@ -1,0 +1,3 @@
+PACKAGES/spectquant $ python3 -m build 
+
+PACKAGES/spectquant $ python3 -m twine upload dist/*
