@@ -53,16 +53,14 @@ $$
 
 The `'threshold-bb'` is well suited to ensure that no uptake of other structures exceeding the threshold are considered in the volume computation of the ROI:
 
-![Original SPECT](imgs/spect_.png)
+![Original SPECT](https://github.com/MarkusStefan/spectquant/raw/dev/imgs/spect_.png)
 *Figure 1: Heatmap of original SPECT*
 
-![Threshold](imgs/threshold.png)
+![Threshold](https://github.com/MarkusStefan/spectquant/raw/dev/imgs/threshold.png)
 *Figure 2: Heatmap of thresholded SPECT with uptake outside the ROI.*
 
-![Threshold-bb](imgs/threshold-bb.png)
+![Threshold-bb](https://github.com/MarkusStefan/spectquant/raw/dev/imgs/threshold-bb.png)
 *Figure 3: Heatmap of thresholded and 'bounded' SPECT with removed uptake outside the ROI.*
-
-
 
 ## SeptumVol
 1. Segmentation masks of the left ventricle (LV) and the right ventricle (RV) are loaded
@@ -91,6 +89,6 @@ $$
 
 <!-- ![IVS](imgs/septumvol_c.gif) -->
 <div style="text-align: center;">
-  <img src="imgs/septumvol_c.gif" alt="IVS Volume Quantification Process" />
+  <img src="https://github.com/MarkusStefan/spectquant/raw/dev/imgs/septumvol_c.gif" alt="IVS Volume Quantification Process" />
   <p><em>Figure 4: IVS Volume Quantification Process on CT with SPECT overlay showing the tracer uptake.</em></p>
 </div>
