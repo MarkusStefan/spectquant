@@ -66,11 +66,11 @@ def _get_cupy_dependency():
     cuda_version = _get_cuda_version()
     system = platform.system().lower()
 
-    requirements_expr = cuda_version.split(".")[0] if cuda_version is not None else None
+    requirements_expr = cuda_version.split('.')[0] if cuda_version is not None else None
     # outputs e.g. 11x for cuda 11.0
     if requirements_expr is not None:
         requirements_expr += "x" if cuda_version else None
-        return requirements_expr
+        return f'cupy-cuda{requirements_expr}'
 
     if cuda_version:
         if system == "linux":
@@ -81,9 +81,9 @@ def _get_cupy_dependency():
             return f"cupy-cuda{cuda_version.replace('.', '')[:2]}-windows_x86_64"
         else:
             # handle other platforms or fall back to CPU version
-            return None
+            return []
     else:
-        return None  # fallback to CPU version
+        return []  # fallback to CPU version
 
 
 _VERSION = _get_version()
@@ -92,9 +92,8 @@ _INSTALL_REQUIREMENTS = _parse_requirements(os.path.join(
     _CURRENT_DIR, "requirements", "requirements.txt"))
 _TEST_REQUIREMENTS = _parse_requirements(os.path.join(
     _CURRENT_DIR, "requirements", "requirements_test.txt"))
-_CUDA_VERSION = _get_cuda_version()
-_GENERAL_CUPY_VERSION = _get_cupy_dependency().split(
-    ".")[0] if _CUDA_VERSION else None
+# _CUDA_VERSION = _get_cuda_version()
+_GENERAL_CUPY_VERSION = _get_cupy_dependency()
 
 setup(
     name="spectquant",
@@ -110,7 +109,7 @@ setup(
     install_requires=_INSTALL_REQUIREMENTS,
     extras_require={
         # pip install spectquant[gpu]
-        'gpu': [f'cupy-cuda{_GENERAL_CUPY_VERSION}']
+        'gpu': _GENERAL_CUPY_VERSION, # leave empty list if no cupy version is found
     },
     tests_require=_TEST_REQUIREMENTS,
     url="https://github.com/MarkusStefan/spectquant",

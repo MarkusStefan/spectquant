@@ -14,6 +14,7 @@ import nibabel as nib
 from spectquant import utils
 from spectquant import morphology
 
+
 class SeptumVol:
 
     def __init__(self,
@@ -109,27 +110,24 @@ class SeptumVol:
         """
         Dilate the segmentations
         """
-        # copy_LV = nib.nifti1.Nifti1Image(self.LV.get_fdata(), self.LV.affine)
-        # copy_RV = nib.nifti1.Nifti1Image(self.RV.get_fdata(), self.RV.affine)
-        print("Dilating segmentations") if (verbose or self.verbose) else None
-        print(f"np.sum(self.LV_data): {np.sum(self.LV_data)}") if (
-            verbose or self.verbose) else None
-        print(f"np.sum(self.RV_data): {np.sum(self.RV_data)}") if (
-            verbose or self.verbose) else None
         self.LV_dilated = morphology.dilate_segmentation(
             self.LV, self.mm_to_dilate, use_gpu=True)
         self.RV_dilated = morphology.dilate_segmentation(
             self.RV, self.mm_to_dilate, use_gpu=True)
         self.LV_dilated_data = self.LV_dilated.get_fdata()
         self.RV_dilated_data = self.RV_dilated.get_fdata()
-        print(f"np.sum(self.LV_dilated_data): {np.sum(self.LV_dilated_data)}") if (
-            verbose or self.verbose) else None
-        print(f"np.sum(self.RV_dilated_data): {np.sum(self.RV_dilated_data)}") if (
-            verbose or self.verbose) else None
+
+        if np.sum(self.LV_dilated_data) == np.sum(self.LV_data):
+            raise ValueError(
+                "Dilation did not change the LV segmentation")
+        if np.sum(self.RV_dilated_data) == np.sum(self.RV_data):
+            raise ValueError(
+                "Dilation did not change the RV segmentation")
 
     def _cut_dilated_segs(self, verbose: bool = False) -> None:
         """
-        Cut the dilated segmentations to the bounding box of the original *unmodified* segmentations
+        Cut the dilated segmentations to the bounding box of
+        the original *unmodified* segmentations
         """
         if verbose:
             print(f"highest_x_index_RV: {self.highest_x_index_RV}")
@@ -139,24 +137,21 @@ class SeptumVol:
             print(f"RV_dilated_data shape: {self.RV_dilated_data.shape}")
             print(f"LV_dilated_data shape: {self.LV_dilated_data.shape}")
 
+        # create empty zeros array of same dimensions as the dilated
+        # segmentations
         RV_masked = np.zeros_like(self.RV_dilated_data)
-        print(
-            f"RV_masked.shape: {RV_masked.shape}\nnp.sum(RV_masked): {np.sum(RV_masked)}\n np.sum(self.RV_dilated_data): {np.sum(self.RV_dilated_data)}"
-        ) if (verbose or self.verbose) else None
+        LV_masked = np.zeros_like(self.LV_dilated_data)
 
+        # cut the dilated segmentations to the bounding box defined by the
+        # original segmentations
         RV_masked[self.lowest_x_index_LV:, :, self.lowest_z_index_LV:self.highest_z_index_LV +
                   1] = self.RV_dilated_data[self.lowest_x_index_LV:, :, self.lowest_z_index_LV:self.highest_z_index_LV + 1]
-        print(f"RV_masked.shape: {RV_masked.shape}\nnp.sum(RV_masked): {np.sum(RV_masked)}") if (
-            verbose or self.verbose) else None
-
-        LV_masked = np.zeros_like(self.LV_dilated_data)
         LV_masked[:self.highest_x_index_RV + 1, :,
                   :] = self.LV_dilated_data[:self.highest_x_index_RV + 1, :, :]
-        print(f"LV_masked.shape: {LV_masked.shape}\nnp.sum(LV_masked): {np.sum(LV_masked)}") if (
-            verbose or self.verbose) else None
-
+        # store as Nifti1Image objects
         self.RV_processed = nib.nifti1.Nifti1Image(RV_masked, self.RV.affine)
         self.LV_processed = nib.nifti1.Nifti1Image(LV_masked, self.LV.affine)
+        # assess the cut segmentations
         print(f"np.sum(self.RV_processed.get_fdata()): {np.sum(self.RV_processed.get_fdata())}") if (
             verbose or self.verbose) else None
         print(f"np.sum(self.LV_processed.get_fdata()): {np.sum(self.LV_processed.get_fdata())}") if (
