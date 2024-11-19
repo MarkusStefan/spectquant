@@ -284,9 +284,9 @@ class SUV:
 
         mask = self.spect.get_fdata() > (ref_roi_suv * self.threshold)
         thresholded_spect: np.ndarray = self.spect.get_fdata() * mask
-        thresholded_spect_nifti = nib.Nifti1Image(thresholded_spect, self.spect.affine)
+        self.thresholded_spect_nifti = nib.Nifti1Image(thresholded_spect, self.spect.affine)
 
-        suv, _ = morphology.compute_suv(thresholded_spect_nifti,
+        suv, _ = morphology.compute_suv(self.thresholded_spect_nifti,
                                         seg,
                                         cube_vol=self.suv_cube_vol,
                                         method=self.suv_method,
