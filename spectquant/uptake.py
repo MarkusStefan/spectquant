@@ -1,5 +1,5 @@
 """
-Class for automatic computation of heart myocardial uptake volume from SPECT images.
+Class for automatic computation of heart uptake volume from SPECT images.
 """
 try:
     from typing import Optional, Dict, List, Union
