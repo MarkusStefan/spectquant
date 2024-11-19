@@ -3,6 +3,7 @@ UTILITY COLLECTION OF FUNCTIONS FOR MORPHOLOGICAL OPERATIONS
 """
 
 import math
+from warnings import warn
 try:
     from typing import Union, Optional, Tuple
 except (ImportError, ModuleNotFoundError):
@@ -243,6 +244,8 @@ def erode_segmentation(seg: nib.nifti1.Nifti1Image,
         vizz_struct=True: None.
 
     """
+    if mm_to_erode == 0:
+        return seg
 
     # extract data & voxel sizes from  Nifti seg
     data = seg.get_fdata()
@@ -265,14 +268,20 @@ def erode_segmentation(seg: nib.nifti1.Nifti1Image,
     y = struct.shape[1] - 1
     z = struct.shape[2] - 1
     # creates a "+"-shaped structure element
-    struct[0, 0, 0] = 0
-    struct[x, 0, 0] = 0
-    struct[0, y, 0] = 0
-    struct[0, 0, z] = 0
-    struct[x, y, 0] = 0
-    struct[0, y, z] = 0
-    struct[x, 0, z] = 0
-    struct[x, y, z] = 0
+    try:
+        struct[0, 0, 0] = 0
+        struct[x, 0, 0] = 0
+        struct[0, y, 0] = 0
+        struct[0, 0, z] = 0
+        struct[x, y, 0] = 0
+        struct[0, y, z] = 0
+        struct[x, 0, z] = 0
+        struct[x, y, z] = 0
+    except IndexError as e:
+        warn(f"IndexError occurred:\t{e}\n\
+              The structuring element could not be created.\
+              Proceeding now with un-eroded segmentation.")
+        return seg
 
     if vizz_struct:
         if vizz_type == 'static':
@@ -319,6 +328,8 @@ def dilate_segmentation(seg: nib.nifti1.Nifti1Image,
         vizz_struct=False: dilated image.
         vizz_struct=True: None.
     """
+    if mm_to_dilate == 0:
+        return seg
 
     # extract data & voxel sizes from  Nifti seg
     data = seg.get_fdata()
@@ -341,14 +352,20 @@ def dilate_segmentation(seg: nib.nifti1.Nifti1Image,
     y = struct.shape[1] - 1
     z = struct.shape[2] - 1
     # creates a "+"-shaped structure element
-    struct[0, 0, 0] = 0
-    struct[x, 0, 0] = 0
-    struct[0, y, 0] = 0
-    struct[0, 0, z] = 0
-    struct[x, y, 0] = 0
-    struct[0, y, z] = 0
-    struct[x, 0, z] = 0
-    struct[x, y, z] = 0
+    try:
+        struct[0, 0, 0] = 0
+        struct[x, 0, 0] = 0
+        struct[0, y, 0] = 0
+        struct[0, 0, z] = 0
+        struct[x, y, 0] = 0
+        struct[0, y, z] = 0
+        struct[x, 0, z] = 0
+        struct[x, y, z] = 0
+    except IndexError as e:
+        warn(f"IndexError occurred:\t{e}\n\
+              The structuring element could not be created.\
+              Proceeding now with un-dilated segmentation.")
+        return seg
 
     if vizz_struct:
         if vizz_type == 'static':

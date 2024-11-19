@@ -34,8 +34,10 @@ class TBR(SUV):
             Default is to erode the segmentation.
         mm_to_dilate (Union[int, float]): Millimeters to dilate the segmentation.
             If provided, will dilate the segmentation instead of eroding.
-        suv_cube_vol (Union[int, float]): Volume of the cube for SUV calculation.
-        suv_method (str): Method for SUV calculation ('peak', 'mean', etc.).
+        tbr_cube_vol (Union[int, float]): Volume of the cube for TBR calculation.
+        tbr_method (str): Method for TBR calculation ('peak', 'mean', etc.).
+        background (str): Name of the background segmentation.
+        mm_to_erode_background (Union[int, float]): Millimeters to erode the background segmentation.
         use_convolution (bool): Whether to use convolution for SUV calculation.
         use_gpu (bool): Whether to use GPU for computations.
         verbose (bool): Whether to print detailed logs.
@@ -74,6 +76,8 @@ class TBR(SUV):
                  mm_to_dilate: Union[int, float] = None,
                  tbr_cube_vol: Union[int, float] = 1,
                  tbr_method: str = 'peak',
+                 background: str = 'inferior_vena_cava',
+                 mm_to_erode_background: Union[int, float] = 3,
                  use_convolution: bool = True,
                  use_gpu: bool = False,
                  verbose: bool = True) -> None:
@@ -95,13 +99,18 @@ class TBR(SUV):
                          use_gpu=use_gpu,
                          verbose=verbose)
 
-        # load Vena Cava for TBR computation -> adjusting SUV by mean uptake of
-        # blood
-        self.vena_cava = self._preprocess(self.segs['inferior_vena_cava'])
-        # derive mean SUV from vena cava using SUV mean computation (only from
-        # non-zero voxels)
-        self.vena_cava_mean, _ = morphology.compute_suv(self.spect,
-                                                        self.vena_cava,
+        self.mm_to_erode_background = mm_to_erode_background
+        # load Vena Cava for TBR computation
+        # -> adjusting SUV by mean uptake of blood
+        # self.background = self._preprocess(self.segs[background])
+        # erode background segmentation instead
+        self.background = morphology.erode_segmentation(background, 
+                                                        self.mm_to_erode_background, 
+                                                        use_gpu=self.use_gpu)
+        # derive mean SUV from vena cava using SUV mean computation 
+        # (only from non-zero voxels)
+        self.background_mean, _ = morphology.compute_suv(self.spect,
+                                                        self.background,
                                                         cube_vol=self.suv_cube_vol,
                                                         method='mean',
                                                         use_convolution=self.use_convolution,
@@ -117,12 +126,6 @@ class TBR(SUV):
 
     def _preprocess(self, img: nib.Nifti1Image) -> nib.nifti1.Nifti1Image:
         return super()._preprocess(img=img)
-
-    # def compute_tbr(self, *args, **kwargs) -> float:
-    #     # Call the parent class compute_suv method
-    #     suv_value = super().compute_suv(*args, **kwargs)
-    #     tbr_value = float( suv_value / self.vena_cava_mean )
-    #     return tbr_value
 
     def compute_tbr(self,
                     body_part: str = 'heart_myocardium',
@@ -149,7 +152,7 @@ class TBR(SUV):
         suv_value = super().compute_suv(body_part=body_part,
                                         preprocess=preprocess)
         # adjust for average blood uptake
-        tbr_value = float(suv_value / self.vena_cava_mean)
+        tbr_value = float(suv_value / self.background_mean)
         return tbr_value
 
     def compute_spect_tbr(self,
@@ -186,7 +189,7 @@ class TBR(SUV):
                                               mode_ref_roi=mode_ref_roi,
                                               preprocess=preprocess)
         # adjust for average blood uptake
-        tbr_value = float(suv_value / self.vena_cava_mean)
+        tbr_value = float(suv_value / self.background_mean)
         return tbr_value
 
 
@@ -195,5 +198,5 @@ class TBR(SUV):
     #                           use_median_vertebrae: bool = False) -> float:
     #     suv_rtidx = super().compute_retention_idx(vertebrae=vertebrae,
     #                                   use_median_vertebrae=use_median_vertebrae)
-    #     tbr_rtidx = float(suv_rtidx / self.vena_cava_mean) # adjust for average blood uptake
+    #     tbr_rtidx = float(suv_rtidx / self.background_mean) # adjust for average blood uptake
     #     return

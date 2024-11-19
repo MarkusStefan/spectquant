@@ -206,6 +206,7 @@ class SUV:
                                                               self.mm_to_erode,
                                                               use_gpu=self.use_gpu)
         else:
+            # except IndexError if dilation goes beyond image boundaries
             eroded_or_dilated = morphology.dilate_segmentation(img,
                                                                self.mm_to_dilate,
                                                                use_gpu=self.use_gpu)
