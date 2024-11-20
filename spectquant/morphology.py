@@ -111,11 +111,17 @@ def compute_suv(spect: nib.nifti1.Nifti1Image,
         return max_value, max_index
 
     if method == 'mean':
-        # only compute mean of non_zero voxels (only over the segmentation
-        # mask)
+        # only compute mean of non_zero voxels 
+        # (only over the segmentation mask)
         non_zero_voxels = mtx[mtx != 0]
+        # check, whether array contains any elements
+        if len(non_zero_voxels) == 0:
+            warn(
+                "No non-zero elements available!"
+            )
+            return 0.0, 0.0
         mean_value = np.mean(non_zero_voxels)
-        mean_index = ''  # nothing meaningful to return
+        mean_index = 0.0  # nothing meaningful to return
         return mean_value, mean_index
 
     # find the indices of the non-zero voxels

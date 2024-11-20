@@ -233,10 +233,10 @@ class SUV:
         if self.mm_to_erode is None:
             raise ValueError(".compute_suv() requires mm_to_erode to be set - \
                              dilation is not supported for CT segmentations!")
-        seg = self._preprocess(
+        self.body_part_seg = self._preprocess(
             self.segs[body_part]) if preprocess else self.segs[body_part]
         suv, _ = morphology.compute_suv(self.spect,
-                                        seg,
+                                        self.body_part_seg,
                                         cube_vol=self.suv_cube_vol,
                                         method=self.suv_method,
                                         use_convolution=self.use_convolution,
@@ -268,13 +268,13 @@ class SUV:
             raise ValueError(".compute_spect_suv() requires mm_to_dilate to be set \
                              - dilation is not supported for SPECT segmentations!")
 
-        seg = self._preprocess(
+        self.body_part_seg = self._preprocess(
             self.segs[body_part]) if preprocess else self.segs[body_part]
 
-        ref_roi_processed = self._preprocess(self.segs[ref_roi]) if preprocess \
+        self.ref_roi_processed = self._preprocess(self.segs[ref_roi]) if preprocess \
             else self.segs[ref_roi]
         ref_roi_suv, _ = morphology.compute_suv(self.spect,
-                                                ref_roi_processed,
+                                                self.ref_roi_processed,
                                                 cube_vol=self.suv_cube_vol,
                                                 method=mode_ref_roi,
                                                 use_convolution=self.use_convolution,
@@ -287,7 +287,7 @@ class SUV:
         self.thresholded_spect_nifti = nib.Nifti1Image(thresholded_spect, self.spect.affine)
 
         suv, _ = morphology.compute_suv(self.thresholded_spect_nifti,
-                                        seg,
+                                        self.body_part_seg,
                                         cube_vol=self.suv_cube_vol,
                                         method=self.suv_method,
                                         use_convolution=self.use_convolution,
