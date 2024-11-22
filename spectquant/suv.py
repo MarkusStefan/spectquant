@@ -286,6 +286,7 @@ class SUV:
         thresholded_spect: np.ndarray = self.spect.get_fdata() * mask
         self.thresholded_spect_nifti = nib.Nifti1Image(thresholded_spect, self.spect.affine)
 
+        # unpack suv_value and index (mostly relevant to SUV peak)
         suv, _ = morphology.compute_suv(self.thresholded_spect_nifti,
                                         self.body_part_seg,
                                         cube_vol=self.suv_cube_vol,

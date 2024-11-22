@@ -106,6 +106,13 @@ def compute_suv(spect: nib.nifti1.Nifti1Image,
             f"The input SPECT scan must have dimensions of at least {K}x{K}x{K}.")
 
     if method == 'max':
+        non_zero_voxels = mtx[mtx != 0]
+        # check, whether array contains any elements
+        if len(non_zero_voxels) == 0:
+            warn(
+                "No non-zero elements available!"
+            )
+            return np.NaN, np.NaN
         max_value = np.max(mtx)
         max_index = np.unravel_index(np.argmax(mtx), mtx.shape)
         return max_value, max_index
@@ -119,9 +126,9 @@ def compute_suv(spect: nib.nifti1.Nifti1Image,
             warn(
                 "No non-zero elements available!"
             )
-            return 0.0, 0.0
+            return np.NaN, np.NaN
         mean_value = np.mean(non_zero_voxels)
-        mean_index = 0.0  # nothing meaningful to return
+        mean_index = np.NaN  # nothing meaningful to return
         return mean_value, mean_index
 
     # find the indices of the non-zero voxels
