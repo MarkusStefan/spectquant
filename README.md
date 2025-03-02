@@ -1,9 +1,10 @@
 # SpectQuant
 [![PyPI](https://img.shields.io/pypi/v/spectquant?logo=pypi&logoColor=white&style=flat-square)](https://pypi.org/project/spectquant/)
 [![PyPI status](https://img.shields.io/pypi/status/ansicolortags.svg)](https://pypi.python.org/pypi/ansicolortags/)
-[![DOI:xxxxxxxx(https://zenodo.org/badge/DOI/XXXXXXXXXXXXsvg)](https://doi.org/XXXXXXXXXX)
+[![DOI:10.1007/978-3-319-76207-4_15](https://zenodo.org/badge/DOI/10.1007/978-3-319-76207-4_15.svg)](https://doi.org/10.1007/978-3-319-76207-4_15)
 ![Maintainer](https://img.shields.io/badge/maintainer-MarkusStefan-blue)
 [![PyPI license](https://img.shields.io/pypi/l/ansicolortags.svg)](https://pypi.python.org/pypi/ansicolortags/)
+
 SpectQuant is a specialized package designed for the feature extraction of special photon emission computer tomography (SPECT) data.
 It leverages advanced algorithms known from signal processing and methodologies to standardized results with the potential for scaled data mining.![SpectQuant Workflow](./path_to_your_local_gif.gif)
 
