@@ -1,12 +1,12 @@
 # SpectQuant
 
-SpectQuant is a specialized package designed for the feature extraction of special photon emission computer tomography$^*$ (SPECT) data.
+SpectQuant is a specialized package designed for the feature extraction of special photon emission computer tomography (SPECT) data.
 It leverages advanced algorithms known from signal processing and methodologies to standardized results with the potential for scaled data mining.![SpectQuant Workflow](./path_to_your_local_gif.gif)
 
 *Note*: Package has been desigend particularly for assessing treatment response of cardiac amyloidosis.
 
 
-\small{$^*$Special Photon Emission Computer Tomography (SPECT) is an imaging technique that allows for the visualization of functional processes in the body. It involves the detection of gamma rays emitted by a radioactive tracer injected into the patient. The quantitative analysis of SPECT data is crucial for accurate diagnosis and research.}
+Special Photon Emission Computer Tomography (SPECT) is an imaging technique that allows for the visualization of functional processes in the body. It involves the detection of gamma rays emitted by a radioactive tracer injected into the patient. The quantitative analysis of SPECT data is crucial for accurate diagnosis and research.
 
 The key steps in the quantitative analysis of SPECT data include:
 
