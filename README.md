@@ -44,6 +44,7 @@ $$
 2. Dilation of segmentation mask by 10mm
 3. Thresholding the entire image: 
 $\forall i \in \{1, \dots, x\}, j \in \{1, \dots, y\}, k \in \{1, \dots, z\}$:
+
 $$
 \text{thresholded SPECT} =
 \begin{cases}
@@ -51,7 +52,8 @@ $$
 1, & \text{otherwise}
 \end{cases}
 $$
-4. If `approach='threshold-bb'`, the dilated segmentation mask is used to contain the ROI within a 10mm range of the segmentation mask. The dilated segmentation is hence used as a *bounding-box*.
+
+5. If `approach='threshold-bb'`, the dilated segmentation mask is used to contain the ROI within a 10mm range of the segmentation mask. The dilated segmentation is hence used as a *bounding-box*.
 
 The `'threshold-bb'` is well suited to ensure that no uptake of other structures exceeding the threshold are considered in the volume computation of the ROI:
 
