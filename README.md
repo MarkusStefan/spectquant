@@ -17,10 +17,12 @@ The key steps in the quantitative analysis of SPECT data include:
 For determining the SUV
 Given a predefined 3D area $A$ (ROI = region of interest) of size $a \cdot a \cdot a$ and a predefined cubic kernel $\kappa$ (3D-window) of size $k \cdot k \cdot k$, the **SUV peak** is given by the cube (also of size $k \cdot k \cdot k$) at the location where the sum (or mean) of values in $\kappa$ is the highest.
 
-$\forall \alpha_1, \alpha_2, \alpha_3 \in \{0, \dots, a\}:$
+$\forall \alpha_1, \alpha_2, \alpha_3 \in \{0, \dots, a\}$:
+
 $$
-    \text{SUV}^{peak} = max\left(\frac{\sum_{\alpha_1, \alpha_2, \alpha_3}^a \kappa}{k \cdot k \cdot k}\right)
+\text{SUV}^{peak} = max\left(\frac{\sum_{\alpha_1, \alpha_2, \alpha_3}^a \kappa}{k \cdot k \cdot k}\right)
 $$
+
 Essentially, the kernel tries every possible position for $\alpha_{\{1,2,3\}}$ from $1, \dots, a$ within area $A$ and yields the spot where the kernel $\kappa$ reaches is maximum sum. Then, the arithmetic average is taken from that by dividing by the number of *voxels* in $\kappa$.
 This concept alos applies to *non-quibic* ROIs.
 
