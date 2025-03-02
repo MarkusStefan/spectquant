@@ -43,7 +43,7 @@ $$
 1. Segmentation mask of the given ROI
 2. Dilation of segmentation mask by 10mm
 3. Thresholding the entire image: 
-$\forall i \in \{1, \dots, x\}, j \in \{1, \dots, y\}, k \in \{1, \dots, z\}:$
+$\forall i \in \{1, \dots, x\}, j \in \{1, \dots, y\}, k \in \{1, \dots, z\}$:
 $$
 \text{thresholded SPECT} =
 \begin{cases}
