@@ -15,7 +15,7 @@ from spectquant.suv import SUV
 class TBR(SUV):
 
     """
-    A class for computing Targent Background/Blood Ratio (TBR) by inheriting from SUV class.
+    A class for computing Target Background/Blood Ratio (TBR) by inheriting from SUV class.
 
     The SUV class is designed to handle the computation of SUV metrics from medical imaging data,
     specifically CT and SPECT scans. It provides methods to process and analyze segmented regions
@@ -137,7 +137,7 @@ class TBR(SUV):
                 use naming from TotalSegmentator.
             preprocess: Whether to preprocess or not.
         Returns:
-            Computet TBR value as float number
+            Computed TBR value as float number
         """
         # enforce erosion for CT segmentations
         # -> adjust for possible false positives from segmentation mask

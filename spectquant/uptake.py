@@ -188,7 +188,9 @@ class UptakeVol:
                 raise ValueError("self.voxel_vol is None")
 
             if compute_number:
-                return np.count_nonzero(self.uptake) * self.voxel_vol
+                # return np.count_nonzero(self.uptake) * self.voxel_vol # in mm^3
+                # return the sum of the thresholded & bounded voxel values
+                return self.uptake.sum() 
             self.uptake_nifti = nib.nifti1.Nifti1Image(
                 self.uptake, self.affine)
             return self.uptake_nifti

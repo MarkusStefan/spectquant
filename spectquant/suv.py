@@ -223,7 +223,7 @@ class SUV:
                 Use naming from TotalSegmentator.
             preprocess: Whether to preprocess or not.
         Returns:
-            Computet Standard Uptake Value as float number
+            Computed Standard Uptake Value as float number
         """
         if not self.erode:
             # enforce erosion for CT segmentations -> ROI are more precise than
@@ -259,7 +259,7 @@ class SUV:
             mode_ref_roi: Which method to use for computing SUV from reference ROI.
             preprocess: Whether to preprocess or not.
         Returns:
-            Computet SUV value as float number
+            Computed SUV value as float number
         """
         if self.erode:
              raise ValueError(".compute_spect_suv() requires self.erode=False \
@@ -362,14 +362,14 @@ class SUV:
             t_vertebrae = self._preprocess(self.segs[f'vertebrae_{vertebrae}'])
             suv_vertebral, _ = morphology.compute_suv(self.spect,
                                                       t_vertebrae,
-                                                      ube_vol=self.suv_cube_vol,
+                                                      cube_vol=self.suv_cube_vol,
                                                       method=self.suv_method,
                                                       use_convolution=self.use_convolution,
                                                       use_gpu=self.use_gpu)
 
         autochthon_right = self.segs['autochthon_right']
         # only keep segmentaition mask between T7 and T11 to limit search space
-        # NOTE: uses T10 if T11 is incomplete and woould otherwise cause a
+        # NOTE: uses T10 if T11 is incomplete and would otherwise cause a
         # ZeroDivisionError
         autochthon_right_trimmed = utils.trim_seg_z(
             autochthon_right, upper_img=t7, lower_img=t11)
