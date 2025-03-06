@@ -6,7 +6,7 @@ SpectQuant: \
     for Cardiac Amyloidosis Quantification on SPECT.
 """
 
-__version__ = "0.1.18"
+__version__ = "0.1.19"
 __author__ = "Markus Köfler"
 __all__ = [
     "SUV",
