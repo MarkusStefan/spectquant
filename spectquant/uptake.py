@@ -2,9 +2,9 @@
 Class for automatic computation of heart uptake volume from SPECT images.
 """
 try:
-    from typing import Optional, Dict, List, Union
+    from typing import Optional, Dict, List, Union, Literal
 except ImportError:
-    from collections.abc import Optional, Dict, List, Union
+    from collections.abc import Optional, Dict, List, Union, Literal
 
 import os
 import gc
@@ -48,7 +48,11 @@ class UptakeVol:
                  segs_subset: List[str] = None,
                  mm_to_dilate: Union[int, float] = 10,
                  approach: str = 'threshold',
-                 threshold: Union[int, float] = None) -> None:
+                 threshold: Union[int, float, Literal['msd']] = None,  # noqa: F821
+                 background: str = 'inferior_vena_cava',
+                 mm_to_erode_background: Union[int, float] = 3,
+                 use_gpu: bool = False,
+                 verbose: bool = True) -> None:
 
         self.spect = spect
         self.spect_path = spect_path
@@ -58,10 +62,24 @@ class UptakeVol:
         self.mm_to_dilate = mm_to_dilate
         self.approach = approach
         self.threshold = threshold
+        self.background = background
+        self.mm_to_erode_background = mm_to_erode_background
+        self.use_gpu = use_gpu
+        self.verbose = verbose
 
         if segs_subset is None:
             self.segs_subset = ['heart_myocardium']
-
+        elif isinstance(segs_subset, str):
+            self.segs_subset = [segs_subset]
+        else:
+            # Make a copy to avoid modifying the original input list
+            self.segs_subset = list(segs_subset)
+        if threshold == 'msd':
+            if background is None:
+                raise ValueError(
+                    "Background segmentation must be provided for 'msd' thresholding")
+            else:
+                self.segs_subset.append(background)
         if self.spect is None and self.spect_path is None:
             raise ValueError(
                 "Either SPECT images or path to SPECT images must be provided")
@@ -87,6 +105,24 @@ class UptakeVol:
         self.effective_threshold = None
         self.final_mask = None
         self.uptake_nifti = None
+        
+        if threshold == 'msd':
+            self.mm_to_erode_background = mm_to_erode_background
+            # load Vena Cava for TBR computation
+            # -> use mean(eroded vena cava) + std(eroded vena cava) as threshold
+            # erode background segmentation instead
+            self.background = morphology.erode_segmentation(self.segs[background], 
+                                                            self.mm_to_erode_background, 
+                                                            use_gpu=self.use_gpu)
+            # resample background to SPECT image shape
+ 
+            # take mean and std of the voxel which are only in the area of the filter mask
+            self.background_filter = self.background.get_fdata() > 0
+            self.spect = utils.resample_img(
+                        img=self.spect, resample_to_img=self.background)
+            self.background_mean = np.mean(self.spect.get_fdata()[self.background_filter])
+            self.background_std = np.std(self.spect.get_fdata()[self.background_filter])
+
 
     def _free_memory(self, verbose: bool = False) -> None:
         """
@@ -110,13 +146,17 @@ class UptakeVol:
         """
 
         if self.approach in ('threshold', 'threshold-bb'):
-            if self.threshold is None or self.threshold == 0:
+            if self.threshold == 'msd':
+                self.effective_threshold = self.background_mean + self.background_std
+                print(f"Effective threshold: {self.effective_threshold}") if verbose else None
+            elif self.threshold is None or self.threshold == 0:
                 self.effective_threshold = 0.0
             elif isinstance(self.threshold, int) or self.threshold >= 1:
                 self.effective_threshold = self.threshold
             elif isinstance(self.threshold, float) and self.threshold < 1:
                 maximum = np.max(self.spect.get_fdata())
                 self.effective_threshold = maximum * self.threshold
+   
             else:
                 raise ValueError(
                     'Threshold must be an integer >1 or a float in the interval (0,1]')
@@ -139,7 +179,7 @@ class UptakeVol:
                     bb = morphology.dilate_segmentation(
                         self.segs[segmentation],
                         mm_to_dilate=self.mm_to_dilate,
-                        use_gpu=True
+                        use_gpu=self.use_gpu
                     )
                     bbs[segmentation] = bb
 

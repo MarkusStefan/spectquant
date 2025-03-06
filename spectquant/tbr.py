@@ -102,8 +102,7 @@ class TBR(SUV):
         self.mm_to_erode_background = mm_to_erode_background
         # load Vena Cava for TBR computation
         # -> adjusting SUV by mean uptake of blood
-        # self.background = self._preprocess(self.segs[background])
-        # erode background segmentation instead
+        # erode background segmentation to avoid false positive voxel predictions
         self.background = morphology.erode_segmentation(self.segs[background], 
                                                         self.mm_to_erode_background, 
                                                         use_gpu=self.use_gpu)
