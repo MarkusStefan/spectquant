@@ -114,8 +114,12 @@ class UptakeVol:
             self.background = morphology.erode_segmentation(self.segs[background], 
                                                             self.mm_to_erode_background, 
                                                             use_gpu=self.use_gpu)
+            
+            # remove background from segs again 
+            # ==> only use segmentation masks specified in segs_subset
+            self.segs_subset.remove('inferior_vena_cava')
+            
             # resample background to SPECT image shape
- 
             # take mean and std of the voxel which are only in the area of the filter mask
             self.background_filter = self.background.get_fdata() > 0
             self.spect = utils.resample_img(
