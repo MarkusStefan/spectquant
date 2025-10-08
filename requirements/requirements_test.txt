@@ -1,0 +1,9 @@
+matplotlib==3.9.2
+nibabel==5.3.0
+nilearn==0.10.4
+numpy==2.1.2
+pandas==2.2.3
+plotly==5.22.0
+scipy==1.14.1
+seaborn==0.13.2
+TotalSegmentator==2.1.0
