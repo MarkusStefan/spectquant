@@ -1,7 +1,7 @@
 # SpectQuant
 [![PyPI](https://img.shields.io/pypi/v/spectquant?logo=pypi&logoColor=white&style=flat-square)](https://pypi.org/project/spectquant/)
 [![PyPI status](https://img.shields.io/pypi/status/spectquant.svg)](https://pypi.python.org/pypi/spectquant/)
-[![DOI:10.1007/978-3-319-76207-4_15](https://zenodo.org/badge/DOI/10.1007/978-3-319-76207-4_15.svg)](https://doi.org/10.1007/978-3-319-76207-4_15)
+[![DOI:10.1007/s00259-025-07673-6](https://zenodo.org/badge/DOI/10.1007/s00259-025-07673-6.svg)](https://doi.org/10.1007/s00259-025-07673-6)
 ![Maintainer](https://img.shields.io/badge/maintainer-MarkusStefan-blue)
 [![PyPI license](https://img.shields.io/pypi/l/spectquant.svg)](https://pypi.python.org/pypi/spectquant/)
 
@@ -102,3 +102,19 @@ $$
   <img src="https://github.com/MarkusStefan/spectquant/raw/dev/imgs/septumvol_c.gif" alt="IVS Volume Quantification Process" />
   <p><em>Figure 4: IVS Volume Quantification Process on CT with SPECT overlay showing the tracer uptake.</em></p>
 </div>
+
+---
+If you are using this package for your research, please consider citing the following paper:
+
+```bibtex
+@article {Spielvogel2025,
+	author = {Spielvogel, C. P. and Köfler, M. and Jiang, Z. and other},
+	title = {Impact of disease-modifying therapy on [99mTc]Tc-DPD SPECT/CT markers in transthyretin cardiac amyloidosis enabled by artificial intelligence},
+	year = {2025},
+    month = {11},
+	journal = {European Journal of Nuclear Medicine and Molecular Imaging},
+    publisher = {Springer Berlin Heidelberg},
+	doi = {10.1007/s00259-025-07673-6},
+	URL = {https://doi.org/10.1007/s00259-025-07673-6}
+}
+```
