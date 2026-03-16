@@ -62,12 +62,17 @@ def compute_suv(spect: nib.nifti1.Nifti1Image,
     shape = mtx.shape
 
     if seg is not None:
-        if seg.shape != shape and isinstance(seg, nib.nifti1.Nifti1Image):
-            seg_ = utils.resample_img(seg, spect)
-        elif seg.shape != shape and isinstance(seg, np.ndarray):
-            raise ValueError(f"Segmentation must be either provided as a Nifti\
-                              image for resamplint or of same shape as SPECT image:\n\
-                              Segmentation: {seg.shape}\nSPECT: {shape}!")
+        if isinstance(seg, nib.nifti1.Nifti1Image):
+            seg_ = utils.resample_img(seg, spect) if seg.shape != shape else seg
+        elif isinstance(seg, np.ndarray):
+            if seg.shape != shape:
+                raise ValueError(f"Segmentation must be either provided as a Nifti\
+                                image for resampling or of same shape as SPECT image:\n\
+                                Segmentation: {seg.shape}\nSPECT: {shape}!")
+            seg_ = seg
+        else:
+            raise ValueError("Segmentation must be either provided as a Nifti\
+                              image for resampling or as a numpy array.")
 
         if isinstance(seg_, nib.nifti1.Nifti1Image):
             seg_mask: np.ndarray = seg_.get_fdata()
