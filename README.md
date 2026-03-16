@@ -1,14 +1,16 @@
 # SpectQuant
 [![PyPI](https://img.shields.io/pypi/v/spectquant?logo=pypi&logoColor=white&style=flat-square)](https://pypi.org/project/spectquant/)
 [![PyPI status](https://img.shields.io/pypi/status/spectquant.svg)](https://pypi.python.org/pypi/spectquant/)
-[![DOI:10.1007/s00259-025-07673-6](https://zenodo.org/badge/DOI/10.1007/s00259-025-07673-6.svg)](https://doi.org/10.1007/s00259-025-07673-6)
+[![DOI badge](https://img.shields.io/static/v1?label=DOI&message=10.1007%2Fs00259-025-07673-6&color=green)](https://doi.org/10.1007/s00259-025-07673-6)
 ![Maintainer](https://img.shields.io/badge/maintainer-MarkusStefan-blue)
 [![PyPI license](https://img.shields.io/pypi/l/spectquant.svg)](https://pypi.python.org/pypi/spectquant/)
+
+
 
 SpectQuant is a specialized package designed for the feature extraction of special photon emission computer tomography (SPECT) data.
 It leverages advanced algorithms known from signal processing and methodologies to standardized results with the potential for scaled data mining.
 
-*Note*: Package has been desigend particularly for assessing treatment response of cardiac amyloidosis.
+*Note*: Package has been designed particularly for assessing treatment response of cardiac amyloidosis.
 
 
 Special Photon Emission Computer Tomography (SPECT) is an imaging technique that allows for the visualization of functional processes in the body. It involves the detection of gamma rays emitted by a radioactive tracer injected into the patient. The quantitative analysis of SPECT data is crucial for accurate diagnosis and research.
