@@ -37,7 +37,7 @@ This concept also applies to *non-cubic* ROIs.
 
 ## TBR (Target to Blood/Background Ratio)
 $$
-\text{TBR \{peak, mean, mode\}} = \frac{\text{SUV \{peak, mean, mode\}}}{\text{SUV mean vena cava inferior}}
+\text{TBR}^{peak, mean, mode} = \frac{\text{SUV \{peak, mean, mode\}}}{\text{SUV mean vena cava inferior}}
 $$
 
 ## Retention Index
